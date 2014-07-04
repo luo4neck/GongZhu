@@ -23,9 +23,12 @@ class CARD
 	void Init(const int ID)
 	{
 		id = ID;
-
-		if (ID%13 == 1) weight = 14;
-		else 			weight = ID;
+		
+		int wgt = ID;
+		wgt = wgt%13;
+		if (wgt == 1)	   weight = 14;
+		else if (wgt == 0) weight = 13;
+		else			   weight = wgt;
 	}
 
 	void Prt()
@@ -50,5 +53,10 @@ class CARD
 	const int Id()
 	{
 		return id;
+	}
+	
+	const int Wgt()
+	{
+		return weight;
 	}
 };
