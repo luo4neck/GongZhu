@@ -9,12 +9,15 @@ class PLAYER
 	int score;
 	int score_sum;
 	public:
+	int hand[13];
 
 	PLAYER()
 	{
 		sheep = 0;
 		pig = 0;
 		bian = 0;
+		score = 0;
+		score_sum = 0;
 	}
 	
 	const int Score()
