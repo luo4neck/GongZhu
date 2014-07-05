@@ -3,11 +3,11 @@
 using namespace std;
 
 const wchar_t spade[]  = L"\u2660";
-const wchar_t heart[]  = L"\u2665";
-//const wchar_t heart[]  = L"\u2661";
+//const wchar_t heart[]  = L"\u2665";
+const wchar_t heart[]  = L"\u2661";
 const wchar_t club[]   = L"\u2663";
-const wchar_t diamond[]= L"\u2666";
-//const wchar_t diamond[]= L"\u2662";
+//const wchar_t diamond[]= L"\u2666";
+const wchar_t diamond[]= L"\u2662";
 
 class CARD
 {
@@ -41,18 +41,18 @@ class CARD
 
 	void Prt()
 	{
+		int I = Id()%13;
+		if(I != 10) wcout<<" ";
+		
 		if (Id() <= 13) 	 wcout<<spade  <<L"";
 		else if (Id() <= 26) wcout<<heart  <<L"";
 		else if (Id() <= 39) wcout<<club   <<L"";
 		else 				 wcout<<diamond<<L"";
 		
-		int I = Id()%13;
-		
 		if (I == 1)		  wcout<<"A";
 		else if (I == 11) wcout<<"J";
 		else if (I == 12) wcout<<"Q";
 		else if (I == 0 ) wcout<<"K";
-		else if (I < 10)  wcout<<I;
 		else			  wcout<<I;
 		
 		wcout<<" ";
@@ -72,14 +72,58 @@ int *Shuffle()
 	int *sh = new int[52];
 	for(int i=0; i<52; ++i) sh[i] = i;
 
-	for(int i=0; i<500; ++i) // shuffle for 500 times..
+	for(int i=0; i<900; ++i) // shuffle for 500 times..
 	{
-		int a = lrand48()%52;
-		int b = lrand48()%52;
-		int tmp;
+		int a = lrand48()%52, tmp, b = lrand48()%52;
 		tmp	  = sh[a];
 		sh[a] = sh[b];
 		sh[b] = tmp;
 	}
 	return sh;
+}
+
+// player class start here.. 
+class PLAYER
+{
+	private:
+	bool sheep; //羊。。
+	bool pig; //猪。。
+	bool bian; //变压器。。
+	int score;
+	int score_sum;
+	public:
+	int hand[13];
+
+	PLAYER()
+	{
+		sheep = 0;
+		pig = 0;
+		bian = 0;
+		score = 0;
+		score_sum = 0;
+	}
+	
+	void play(int on_table[])
+	{
+	
+	}
+
+	const int Score()
+	{
+		//本局分数。。
+		return score;
+	}
+	
+	const int ScoreSum()
+	{
+		//输出已经加上的新分数。。
+		return score_sum;
+	}
+};
+
+int compare(const void *a, const void *b) // used to quick sorting..
+{
+	int *pa = (int*)a;
+	int *pb = (int*)b;
+	return (*pa) - (*pb);
 }

@@ -32,3 +32,10 @@ class PLAYER
 		return score_sum;
 	}
 };
+
+int compare(const void *a, const void *b) // used to quick sorting..
+{
+	int *pa = (int*)a;
+	int *pb = (int*)b;
+	return (*pa) - (*pb);
+}
