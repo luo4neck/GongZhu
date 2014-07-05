@@ -19,6 +19,8 @@ class CARD
 	public:
 	CARD() {}
 	
+	~CARD() {}
+	
 	void Init(const int ID)
 	{
 		id = ID;
@@ -91,10 +93,11 @@ class PLAYER
 	bool bian; //变压器。。
 	int score;
 	int score_sum;
+	const int id;
 	public:
 	int hand[13];
 
-	PLAYER()
+	PLAYER(int I): id(I)
 	{
 		sheep = 0;
 		pig = 0;
@@ -103,11 +106,15 @@ class PLAYER
 		score_sum = 0;
 	}
 	
+	~PLAYER() {};
+
 	void play(int on_table[])
 	{
-	
+		on_table[ Id()] = hand[9];
 	}
-
+	
+	const int Id() { return id; }
+	
 	const int Score()
 	{
 		//本局分数。。

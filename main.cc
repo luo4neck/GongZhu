@@ -6,8 +6,8 @@
 
 using namespace std;
 
-void print_table(int on_table[]);
-int Play(int first, PLAYER P0, PLAYER P1, PLAYER P2, PLAYER P3);
+void print_table(int on_table[], CARD *card);
+int Play(int first, PLAYER P0, PLAYER P1, PLAYER P2, PLAYER P3, CARD *card);
 
 int main()
 {
@@ -21,7 +21,7 @@ int main()
 		if(i%13 == 0) wcout<<endl;	
 	}
 	
-	PLAYER P0, P1, P2, P3;
+	PLAYER P0(0), P1(1), P2(2), P3(3);
 	// Game start.. every one selling..
 	
 	//while(0)// game loop..
@@ -52,14 +52,11 @@ int main()
 		for(int i=0; i<13; ++i) card[P2.hand[i]].Prt(); wcout<<endl;
 		for(int i=0; i<13; ++i) card[P3.hand[i]].Prt(); wcout<<endl;
 		
-		for(int round_i=0; round_i<1; ++round_i)
-		{
-			first_guy = Play(first_guy, P0, P1, P2, P3);
-
-			//print_table(round_i, 1);
-		}
-	
 		// play..
+		for(int round_i=0; round_i<3; ++round_i)
+		{
+			first_guy = Play(first_guy, P0, P1, P2, P3, card);
+		}
 	}
 	
 	delete[] card;
@@ -68,7 +65,7 @@ int main()
     return 0;
 }
 
-void print_table(int on_table[])
+void print_table(int on_table[], CARD* card)
 {	
 	wcout<<"   ";
 	for(int i=0; i<25; ++i) wcout<<"_";
@@ -82,6 +79,27 @@ void print_table(int on_table[])
 		wcout<<"  | Player 1       Player 3 |"<<endl;
 		else if(i == 8) 
 		wcout<<"  |            ME           |"<<endl;
+		else if(on_table[2] > 0 && i ==1 ) //玩家2出过牌。。
+		{
+			int card_id = on_table[2];
+			wcout<<"  |          ";
+			card[card_id].Prt();
+			wcout<<"           |"<<endl;
+		}
+		else if(on_table[2] > 0 && i ==1 ) //玩家1出过牌。。
+		{
+			int card_id = on_table[2];
+			wcout<<"  |          ";
+			card[card_id].Prt();
+			wcout<<"           |"<<endl;
+		}
+		else if(on_table[2] > 0 && i ==1 ) //玩家3出过牌。。
+		{
+			int card_id = on_table[2];
+			wcout<<"  |          ";
+			card[card_id].Prt();
+			wcout<<"           |"<<endl;
+		}
 		else 
 		wcout<<"  |                         |"<<endl;
 	}
@@ -91,13 +109,13 @@ void print_table(int on_table[])
 	wcout<<"|"<<endl;
 }
 
-int Play(int first, PLAYER P0, PLAYER P1, PLAYER P2, PLAYER P3)
+int Play(int first, PLAYER P0, PLAYER P1, PLAYER P2, PLAYER P3, CARD *card)
 {
-	int on_table[4];
-	
+	int on_table[4]={0,0,0,0};
+
 	if(first == 0)
 	{	
-		print_table(on_table);
+		print_table(on_table, card);
 		P0.play(on_table);
 		P1.play(on_table);
 		P2.play(on_table);
@@ -110,7 +128,7 @@ int Play(int first, PLAYER P0, PLAYER P1, PLAYER P2, PLAYER P3)
 		P2.play(on_table);
 		P3.play(on_table);
 		
-		print_table(on_table);
+		print_table(on_table, card);
 		P0.play(on_table);
 	}
 	
@@ -119,7 +137,7 @@ int Play(int first, PLAYER P0, PLAYER P1, PLAYER P2, PLAYER P3)
 		P2.play(on_table);
 		P3.play(on_table);
 		
-		print_table(on_table);
+		print_table(on_table, card);
 		P0.play(on_table);
 		P1.play(on_table);
 	}
@@ -128,13 +146,13 @@ int Play(int first, PLAYER P0, PLAYER P1, PLAYER P2, PLAYER P3)
 	{	
 		P3.play(on_table);
 		
-		print_table(on_table);
+		print_table(on_table, card);
 		P0.play(on_table);
 		P1.play(on_table);
 		P2.play(on_table);
 	}
 	
-	int next = 0;
+	int next = 1;
 	//int next = 4Cmp(on_table);
 	return next;
 }
