@@ -56,6 +56,13 @@ void print_table(int on_table[], CARD* card)
 				card[card_id3].Prt();
 				wcout<<"   |"<<endl;
 		}
+		else if(on_table[0] > 0 && i ==9 ) //玩家3先出牌。。
+		{
+				int card_id3 = on_table[0];
+				wcout<<"  |           ";
+				card[card_id3].Prt();
+				wcout<<"          |"<<endl;
+		}
 		else 
 		wcout<<"  |                         |"<<endl;
 	}
@@ -85,13 +92,18 @@ int four_max(int on_table[], CARD* card)
 	wcout<<endl;
 
 	int re;// return the player id..
-	if (p[0] > p[1] && p[0] > p[2] && p[0] > p[3]) 		re = 0;
+	if 		(p[0] > p[1] && p[0] > p[2] && p[0] > p[3]) re = 0;
 	else if (p[1] > p[0] && p[1] > p[2] && p[1] > p[3]) re = 1;
 	else if (p[2] > p[0] && p[2] > p[1] && p[2] > p[3]) re = 2;
 	else 												re = 3;
 	//else if (p[3] > p[0] && p[3] > p[1] && p[3] > p[2]) re = 3;
 	
 	return re;
+}
+
+int Allmark(int on_table[], CARD* card)
+{
+	return 0;
 }
 
 int Play(int first, PLAYER P0, PLAYER P1, PLAYER P2, PLAYER P3, CARD *card)
@@ -101,42 +113,56 @@ int Play(int first, PLAYER P0, PLAYER P1, PLAYER P2, PLAYER P3, CARD *card)
 	if(first == 0)
 	{	
 		print_table(on_table, card);
-		P0.play(on_table);
-		P1.play(on_table);
-		P2.play(on_table);
-		P3.play(on_table);
+		P0.playme(on_table, card);
+		P1.play(on_table, card);
+		P2.play(on_table, card);
+		P3.play(on_table, card);
+	
+		print_table(on_table, card);
 	}
 	
 	if(first == 1)
 	{	
-		P1.play(on_table);
-		P2.play(on_table);
-		P3.play(on_table);
+		P1.play(on_table, card);
+		P2.play(on_table, card);
+		P3.play(on_table, card);
 		
 		print_table(on_table, card);
-		P0.play(on_table);
+		P0.playme(on_table, card);
+		
+		print_table(on_table, card);
 	}
 	
 	if(first == 2)
 	{	
-		P2.play(on_table);
-		P3.play(on_table);
+		P2.play(on_table, card);
+		P3.play(on_table, card);
 		
 		print_table(on_table, card);
-		P0.play(on_table);
-		P1.play(on_table);
+		P0.playme(on_table, card);
+		P1.play(on_table, card);
+		
+		print_table(on_table, card);
 	}
 	
 	if(first == 3)
 	{	
-		P3.play(on_table);
+		P3.play(on_table, card);
 		
 		print_table(on_table, card);
-		P0.play(on_table);
-		P1.play(on_table);
-		P2.play(on_table);
+		P0.playme(on_table, card);
+		P1.play(on_table, card);
+		P2.play(on_table, card);
+		
+		print_table(on_table, card);
 	}
 	
 	int next = four_max(on_table, card);
+	
+	if ( next == 0)      P0.getall( on_table); // 拿到桌上所有牌。。并且给自己加分。。
+	else if( next == 1 ) P1.getall( on_table);
+	else if( next == 2 ) P2.getall( on_table);
+	else 				 P3.getall( on_table);
+	
 	return next;
 }

@@ -1,4 +1,5 @@
 #include"iostream"
+#include"iomanip"
 
 using namespace std;
 
@@ -115,8 +116,40 @@ class PLAYER
 	}
 	
 	~PLAYER() {};
+	
+	void playme(int on_table[], CARD *card)
+	{
+    	wcout<<"In my hand: ";
+     	for(int i=0; i<13; ++i)
+		{
+	        if ( hand[i] == 0 ) wcout<<"   ";
+			else card[ hand[i] ].Prt();
+		}
+		wcout<<endl<<"             ";
+	
+		for(int i=0; i<13; ++i)
+		{
+			if ( hand[i] != 0 )	wcout<<setw(2)<<i<<"  "; 
+			else                wcout<<"   ";
+		}
+		wcout<<endl;
+	
+		while(1)
+		{
+			wcout<<"Please select a card to send out"<<endl;
+			int re;
+			wcin>>re;
+		
+			if ( hand[re] != 0 && re<13 && re>=0 )
+			{
+				on_table[0] = hand[re];
+				hand[re] = 0;
+				break;
+			}
+		}
+	}
 
-	void play(int on_table[])
+	void play(int on_table[], CARD* card)
 	{
 		int count = 0; //数数桌上有几张牌了。。
 		for( int i=0; i<4; ++i)
@@ -152,7 +185,12 @@ class PLAYER
 		on_table[ Id() ] = hand[out];// give a card from hand onto the table..
 		hand[out] = 0; // this position is empty now.. set to 0..
 	}
+
+	void getall(int on_table[])
+	{
 	
+	}
+
 	const int Id() { return id; }
 	
 	const int Score()
