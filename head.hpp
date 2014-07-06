@@ -106,7 +106,7 @@ int Allmark(int on_table[], CARD* card)
 	return 0;
 }
 
-int Play(int first, PLAYER P0, PLAYER P1, PLAYER P2, PLAYER P3, CARD *card)
+int Play(int first, PLAYER &P0, PLAYER &P1, PLAYER &P2, PLAYER &P3, CARD *card)
 {
 	int on_table[4]={0,0,0,0};
 

@@ -7,7 +7,7 @@
 using namespace std;
 
 void print_table(int on_table[], CARD *card);
-int Play(int first, PLAYER P0, PLAYER P1, PLAYER P2, PLAYER P3, CARD *card);
+int Play(int first, PLAYER &P0, PLAYER &P1, PLAYER &P2, PLAYER &P3, CARD *card);
 int four_max(int on_table[], CARD* card);
 int Allmark(int on_table[], CARD* card);
 
