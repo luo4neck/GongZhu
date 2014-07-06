@@ -1,8 +1,8 @@
 #include"stdlib.h"
 #include"iostream"
 #include"clocale"
-#include"card.h"
-#include"head.h"
+#include"card.hpp"
+#include"head.hpp"
 
 using namespace std;
 
