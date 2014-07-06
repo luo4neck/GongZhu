@@ -2,12 +2,13 @@
 #include"iostream"
 #include"clocale"
 #include"card.h"
-//#include"player.h"
+#include"head.h"
 
 using namespace std;
 
 void print_table(int on_table[], CARD *card);
 int Play(int first, PLAYER P0, PLAYER P1, PLAYER P2, PLAYER P3, CARD *card);
+int four_max(int on_table[], CARD* card);
 
 int main()
 {
@@ -17,8 +18,8 @@ int main()
 	for(int i=1; i<53; ++i)
 	{
 		card[i].Init(i);
-		card[i].Prt();
-		if(i%13 == 0) wcout<<endl;	
+	//	card[i].Prt();
+	//	if(i%13 == 0) wcout<<endl;	
 	}
 	
 	PLAYER P0(0), P1(1), P2(2), P3(3);
@@ -64,104 +65,5 @@ int main()
 	
     return 0;
 }
-
-void print_table(int on_table[], CARD* card)
-{	
-	wcout<<"   ";
-	for(int i=0; i<25; ++i) wcout<<"_";
-	wcout<<endl;
-	
-	for(int i=0; i<10; ++i)
-	{
-		if(i == 0) 
-		wcout<<"  |        Player 2         |"<<endl;
-		else if(i == 4) 
-		wcout<<"  | Player 1       Player 3 |"<<endl;
-		else if(i == 8) 
-		wcout<<"  |            ME           |"<<endl;
-		else if(on_table[2] > 0 && i ==1 ) //玩家2出过牌。。
-		{
-			int card_id = on_table[2];
-			wcout<<"  |          ";
-			card[card_id].Prt();
-			wcout<<"           |"<<endl;
-		}
-		else if(on_table[2] > 0 && i ==1 ) //玩家1出过牌。。
-		{
-			int card_id = on_table[2];
-			wcout<<"  |          ";
-			card[card_id].Prt();
-			wcout<<"           |"<<endl;
-		}
-		else if(on_table[2] > 0 && i ==1 ) //玩家3出过牌。。
-		{
-			int card_id = on_table[2];
-			wcout<<"  |          ";
-			card[card_id].Prt();
-			wcout<<"           |"<<endl;
-		}
-		else 
-		wcout<<"  |                         |"<<endl;
-	}
-		
-	wcout<<"  |";
-	for(int i=0; i<25; ++i) wcout<<"_";
-	wcout<<"|"<<endl;
-}
-
-int Play(int first, PLAYER P0, PLAYER P1, PLAYER P2, PLAYER P3, CARD *card)
-{
-	int on_table[4]={0,0,0,0};
-
-	if(first == 0)
-	{	
-		print_table(on_table, card);
-		P0.play(on_table);
-		P1.play(on_table);
-		P2.play(on_table);
-		P3.play(on_table);
-	}
-	
-	if(first == 1)
-	{	
-		P1.play(on_table);
-		P2.play(on_table);
-		P3.play(on_table);
-		
-		print_table(on_table, card);
-		P0.play(on_table);
-	}
-	
-	if(first == 2)
-	{	
-		P2.play(on_table);
-		P3.play(on_table);
-		
-		print_table(on_table, card);
-		P0.play(on_table);
-		P1.play(on_table);
-	}
-	
-	if(first == 3)
-	{	
-		P3.play(on_table);
-		
-		print_table(on_table, card);
-		P0.play(on_table);
-		P1.play(on_table);
-		P2.play(on_table);
-	}
-	
-	int next = 1;
-	//int next = 4Cmp(on_table);
-	return next;
-}
-
-
-
-
-
-
-
 
 

@@ -41,7 +41,7 @@ class CARD
 		else					credit = 0; 
 	}
 
-	void Prt()
+	const void Prt()
 	{
 		int I = Id()%13;
 		if(I != 10) wcout<<" ";
@@ -66,6 +66,14 @@ class CARD
 	const int Wgt() { return weight; }
 	
 	const int Crt() { return credit; }
+	
+	const int Clr() 
+	{ 
+		if( Id() <= 13)			return 0; // spade..
+		else if ( Id() <= 26 )  return 1; // heart..
+		else if ( Id() <= 39 )  return 2; // club..
+		else 					return 3; // diamond..
+	}
 };
 
 int *Shuffle()
@@ -110,7 +118,39 @@ class PLAYER
 
 	void play(int on_table[])
 	{
-		on_table[ Id()] = hand[9];
+		int count = 0; //数数桌上有几张牌了。。
+		for( int i=0; i<4; ++i)
+		{
+			if ( on_table[i] != 0 ) count++;
+		}
+			
+		int inhand = 0;
+		for( int i=0; i<13; ++i)
+		{
+			if( hand[i] != 0) inhand++;// 数数手里还有多少张牌。。
+		}
+
+		if ( count == 0 ) // 没牌。。先出。。 
+		{
+
+			if ( inhand == 13) // 手里有13张牌。。第一把。。应该出草花2。。
+			{
+				
+			}
+			else
+			{
+			
+			}
+		}
+		else 
+		{
+		
+		}
+		
+		int out = 13 - inhand; 
+
+		on_table[ Id() ] = hand[out];// give a card from hand onto the table..
+		hand[out] = 0; // this position is empty now.. set to 0..
 	}
 	
 	const int Id() { return id; }
