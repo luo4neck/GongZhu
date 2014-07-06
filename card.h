@@ -119,6 +119,11 @@ class PLAYER
 	
 	void playme(int on_table[], CARD *card)
 	{
+		for(int i=0; i<13; ++i)
+		{
+			wcout<<hand[i]<<" ";
+		}
+		wcout<<endl;
     	wcout<<"In my hand: ";
      	for(int i=0; i<13; ++i)
 		{
@@ -147,8 +152,10 @@ class PLAYER
 				break;
 			}
 		}
+		
+		wcout<<hand[0]<<endl;
 	}
-
+	
 	void play(int on_table[], CARD* card)
 	{
 		int count = 0; //数数桌上有几张牌了。。
