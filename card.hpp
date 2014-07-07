@@ -4,11 +4,11 @@
 using namespace std;
 
 const wchar_t spade[]  = L"\u2660";
-//const wchar_t heart[]  = L"\u2665";
-const wchar_t heart[]  = L"\u2661";
+const wchar_t heart[]  = L"\u2665";
+//const wchar_t heart[]  = L"\u2661";
 const wchar_t club[]   = L"\u2663";
-//const wchar_t diamond[]= L"\u2666";
-const wchar_t diamond[]= L"\u2662";
+const wchar_t diamond[]= L"\u2666";
+//const wchar_t diamond[]= L"\u2662";
 
 class CARD
 {
@@ -38,7 +38,6 @@ class CARD
 		else if ( ID == 24 )	credit = -20; // heart J..
 		else if ( ID == 25 )	credit = -30; // heart Q..
 		else if ( ID == 26 )	credit = -40; // heart k..
-		else if ( ID == 36 )	credit = 2;   // transformer..
 		else if ( ID == 50 )	credit = 100; // sheep.. 
 		else					credit = 0; 
 	}
@@ -64,6 +63,7 @@ class CARD
 	}
 	
 	void Double()	{ credit = credit * 2; }
+	
 	const int Id()  { return id; }
 	
 	const int Wgt() { return weight; }
@@ -99,6 +99,7 @@ int *Shuffle()
 class PLAYER
 {
 	private:
+	bool trans;
 	int score;
 	int score_sum;
 	const int id;
@@ -107,6 +108,7 @@ class PLAYER
 
 	PLAYER(int I): id(I)
 	{
+		trans = 0;
 		score = 0;
 		score_sum = 0;
 	}
@@ -115,11 +117,12 @@ class PLAYER
 	
 	void playme(int on_table[], CARD *card)
 	{
+	/*
 		for(int i=0; i<13; ++i)
 		{
 			wcout<<hand[i]<<" ";
 		}
-		wcout<<endl;
+		wcout<<endl; */
     	wcout<<"In my hand: ";
      	for(int i=0; i<13; ++i)
 		{
@@ -178,7 +181,7 @@ class PLAYER
 			}
 		}
 		
-		wcout<<hand[0]<<endl;
+//		wcout<<hand[0]<<endl;
 	}
 	
 	void play(int on_table[], CARD* card)
@@ -265,22 +268,45 @@ class PLAYER
 		hand[out] = 0; // this position is empty now.. set to 0..
 	}
 
-	void getall(int on_table[])
+	void getall(int on_table[], CARD *card)
 	{
+		int count = 0;
+		for(int i=0; i<4; ++i)
+		{
+			if ( on_table[i] == 36 )
+			Getrans();
+			else 
+			count = count + card[ on_table[i]].Crt();
+		}
+		score = score + count;
+		wcout<<"Player "<<Id()<<" is the largest!\n";
+		wcout<<"Player "<<Id()<<" got "<<count<<"!\n";
+	}
 	
+	void Getrans()
+	{
+		trans = 1; // 1 is get the trans..
+	}
+
+	const int Trans()
+	{
+		if (trans == 0)	return 1;
+		else 			return 2;
 	}
 
 	const int Id() { return id; }
-	
+
 	const int Score()
 	{
 		//本局分数。。
 		return score;
 	}
 	
+	void SetScore() { score = 0; }
 	const int ScoreSum()
 	{
 		//输出已经加上的新分数。。
+		score_sum = score_sum + score * Trans();
 		return score_sum;
 	}
 };
