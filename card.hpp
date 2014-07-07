@@ -202,16 +202,19 @@ class PLAYER
 		int out; //要出去的牌在自己手里的编号。。
 		if ( count == 0 && inhand == 13 ) //桌上没牌并且是第一轮。。先出草花2。。 
 		{
-			on_table[ Id() ] = 28; 
+			for( int i=0; i<13; ++i)
+			{
+				if (card[hand[i]].Id() == 28)	out = i;
+			}
 		}
-		else 
+		else// 不是第一轮。。 
 		{
 			if( count == 0 ) //桌上没牌。。
 			{
 				bool have = 0;
 				for( int i=0; i<13; ++i) //先拱猪。。
 				{
-					if ( card[ hand[i] ].Clr() == 1 && card[ hand[i] ].Wgt() <= 11)
+					if ( hand[i]!=0 && card[ hand[i] ].Clr() == 1 && card[ hand[i] ].Wgt() <= 11)
 					{
 						out = i;
 						have = 1; //有合适的黑桃比国内且出了。。
@@ -262,7 +265,6 @@ class PLAYER
 			}
 		}
 		
-
 		on_table[ Id() ] = hand[out];// give a card from hand onto the table..
 		hand[out] = 0; // this position is empty now.. set to 0..
 	}

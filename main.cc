@@ -8,7 +8,7 @@ using namespace std;
 
 void print_table(int on_table[], CARD *card);
 int Play(int first, PLAYER &P0, PLAYER &P1, PLAYER &P2, PLAYER &P3, CARD *card);
-int four_max(int on_table[], CARD* card);
+int four_max(int first, int on_table[], CARD* card);
 int Allmark(int on_table[], CARD* card);
 
 int main()
@@ -56,14 +56,14 @@ int main()
 		for(int i=0; i<13; ++i) card[P3.hand[i]].Prt(); wcout<<endl;
 		*/
 		// play..
-		for(int round_i=0; round_i<3; ++round_i)
+		for(int round_i=0; round_i<13; ++round_i)
 		{
 			wcout<<endl<<"+ + + + + + + + + + + + + + + + ";
 			wcout<<"+ + + + + + + + + + + + + + + + + "<<endl;
 			wcout<<"This is round "<<round_i + 1<<endl;
 			
 			first_guy = Play(first_guy, P0, P1, P2, P3, card);
-			wcout<<first_guy<<endl;			
+			wcout<<"Player "<<first_guy<<" is the largest"<<endl;			
 			wcout<<"Round "<<round_i + 1<<" finished!"<<endl;
 		}
 	}
