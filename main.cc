@@ -49,11 +49,12 @@ int main()
 		qsort(P1.hand, 13, sizeof(int), compare);
 		qsort(P2.hand, 13, sizeof(int), compare);
 		qsort(P3.hand, 13, sizeof(int), compare);
+		/*
 		for(int i=0; i<13; ++i) card[P0.hand[i]].Prt(); wcout<<endl;
 		for(int i=0; i<13; ++i) card[P1.hand[i]].Prt(); wcout<<endl;
 		for(int i=0; i<13; ++i) card[P2.hand[i]].Prt(); wcout<<endl;
 		for(int i=0; i<13; ++i) card[P3.hand[i]].Prt(); wcout<<endl;
-		
+		*/
 		// play..
 		for(int round_i=0; round_i<3; ++round_i)
 		{
@@ -62,7 +63,7 @@ int main()
 			wcout<<"This is round "<<round_i + 1<<endl;
 			
 			first_guy = Play(first_guy, P0, P1, P2, P3, card);
-			
+			wcout<<first_guy<<endl;			
 			wcout<<"Round "<<round_i + 1<<" finished!"<<endl;
 		}
 	}

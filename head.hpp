@@ -114,55 +114,58 @@ int Play(int first, PLAYER &P0, PLAYER &P1, PLAYER &P2, PLAYER &P3, CARD *card)
 	{	
 		print_table(on_table, card);
 		P0.playme(on_table, card);
-		P1.play(on_table, card);
-		P2.play(on_table, card);
-		P3.play(on_table, card);
-	
+		P1.play  (on_table, card);
+		P2.play  (on_table, card);
+		P3.play  (on_table, card);
+		wcout<<"Result of this round:"<<endl;
 		print_table(on_table, card);
 	}
 	
 	if(first == 1)
 	{	
-		P1.play(on_table, card);
-		P2.play(on_table, card);
-		P3.play(on_table, card);
+		P1.play  (on_table, card);
+		P2.play  (on_table, card);
+		P3.play  (on_table, card);
 		
 		print_table(on_table, card);
 		P0.playme(on_table, card);
 		
+		wcout<<"Result of this round:"<<endl;
 		print_table(on_table, card);
 	}
 	
 	if(first == 2)
 	{	
-		P2.play(on_table, card);
-		P3.play(on_table, card);
+		P2.play  (on_table, card);
+		P3.play  (on_table, card);
 		
 		print_table(on_table, card);
 		P0.playme(on_table, card);
-		P1.play(on_table, card);
+		P1.play  (on_table, card);
 		
+		wcout<<"Result of this round:"<<endl;
 		print_table(on_table, card);
 	}
 	
 	if(first == 3)
 	{	
-		P3.play(on_table, card);
+		P3.play  (on_table, card);
 		
 		print_table(on_table, card);
 		P0.playme(on_table, card);
-		P1.play(on_table, card);
-		P2.play(on_table, card);
+		P1.play  (on_table, card);
+		P2.play  (on_table, card);
 		
+		wcout<<"Result of this round:"<<endl;
 		print_table(on_table, card);
 	}
 	
 	int next = four_max(on_table, card);
-	
 	if ( next == 0)      P0.getall( on_table); // 拿到桌上所有牌。。并且给自己加分。。
 	else if( next == 1 ) P1.getall( on_table);
 	else if( next == 2 ) P2.getall( on_table);
 	else 				 P3.getall( on_table);
 	
+	wcout<< next <<endl;	
 	return next;
 }

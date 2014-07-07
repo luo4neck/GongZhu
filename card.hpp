@@ -4,11 +4,11 @@
 using namespace std;
 
 const wchar_t spade[]  = L"\u2660";
-const wchar_t heart[]  = L"\u2665";
-//const wchar_t heart[]  = L"\u2661";
+//const wchar_t heart[]  = L"\u2665";
+const wchar_t heart[]  = L"\u2661";
 const wchar_t club[]   = L"\u2663";
-const wchar_t diamond[]= L"\u2666";
-//const wchar_t diamond[]= L"\u2662";
+//const wchar_t diamond[]= L"\u2666";
+const wchar_t diamond[]= L"\u2662";
 
 class CARD
 {
@@ -70,10 +70,10 @@ class CARD
 	
 	const int Clr() 
 	{ 
-		if( Id() <= 13)			return 0; // spade..
-		else if ( Id() <= 26 )  return 1; // heart..
-		else if ( Id() <= 39 )  return 2; // club..
-		else 					return 3; // diamond..
+		if( Id() <= 13)			return 1; // spade..
+		else if ( Id() <= 26 )  return 2; // heart..
+		else if ( Id() <= 39 )  return 3; // club..
+		else 					return 4; // diamond..
 	}
 };
 
@@ -130,7 +130,7 @@ class PLAYER
 	        if ( hand[i] == 0 ) wcout<<"   ";
 			else card[ hand[i] ].Prt();
 		}
-		wcout<<endl<<"             ";
+		wcout<<endl<<"Card Number: ";
 	
 		for(int i=0; i<13; ++i)
 		{
@@ -138,18 +138,47 @@ class PLAYER
 			else                wcout<<"   ";
 		}
 		wcout<<endl;
-	
+		
+		int dom_clr; //dominent colour..
+		if ( on_table[1] > 0 ) 		dom_clr = card[ on_table[1] ].Clr();
+		else if ( on_table[2] > 0 ) dom_clr = card[ on_table[2] ].Clr();
+		else if ( on_table[3] > 0 ) dom_clr = card[ on_table[3] ].Clr();
+		else 								dom_clr = 0;
+
 		while(1)
 		{
 			wcout<<"Please select a card to send out"<<endl;
 			int re;
 			wcin>>re;
 		
-			if ( hand[re] != 0 && re<13 && re>=0 )
+			if ( wcin.fail() || re<0 || re>12 || hand[re]==0 )
+			// 选一张牌出处去。。检测是否合法。。 
 			{
-				on_table[0] = hand[re];
-				hand[re] = 0;
-				break;
+				wcout<<"Wrong input!"<<endl;
+			}
+				else 
+			{
+				bool have = 0;
+				for( int i=0; i<13; ++i)
+				// 如果手里的牌中有dom-clr的花色。。 
+				{
+					if( hand[i]!=0 && card[hand[i]].Clr() == dom_clr ) 
+					have = 1;
+				}
+				
+				//wcout<<dom_clr<<" "<<have<<" "<<card[hand[re]].Clr()<<endl;
+
+				if (dom_clr!=0 && have && card[hand[re]].Clr() != dom_clr ) 
+				// 我有这个花色并且出处来的不是这个花色。。
+				{
+					wcout<<"Wrong input!"<<endl;
+				}
+				else
+				{
+					on_table[0] = card[hand[re]].Id();
+					hand[re] = 0;
+					break;
+				}
 			}
 		}
 		
@@ -170,24 +199,69 @@ class PLAYER
 			if( hand[i] != 0) inhand++;// 数数手里还有多少张牌。。
 		}
 
-		if ( count == 0 ) // 没牌。。先出。。 
+		int out; //要出去的牌在自己手里的编号。。
+		if ( count == 0 && inhand == 13 ) //桌上没牌并且是第一轮。。先出草花2。。 
 		{
-
-			if ( inhand == 13) // 手里有13张牌。。第一把。。应该出草花2。。
-			{
-				
-			}
-			else
-			{
-			
-			}
+			on_table[ Id() ] = 28; 
 		}
 		else 
 		{
-		
+			if( count == 0 ) //桌上没牌。。
+			{
+				bool have = 0;
+				for( int i=0; i<13; ++i) //先拱猪。。
+				{
+					if ( card[ hand[i] ].Clr() == 1 && card[ hand[i] ].Wgt() <= 11)
+					{
+						out = i;
+						have = 1; //有合适的黑桃比国内且出了。。
+					}
+				}
+				if ( have == 0 ) // 没有合适的黑桃。。选一张小牌出。。
+				{
+					int weight = 15;
+					for( int j=0; j<13; ++j)
+					{
+						if( hand[j]!=0 && card[ hand[j] ].Wgt() < weight )
+						out = j, weight = card[ hand[j] ].Wgt();
+					}
+				}
+			}
+			else //桌上有牌。。需要先判断花色。。
+			{
+				int dom_clr;
+				for( int i=1; i<=3; ++i)
+				{
+					int t = (Id() + i)%4;
+					if ( on_table[t] != 0 )
+					{
+						dom_clr = card[ on_table[t] ].Clr();
+						break;
+					}
+				}
+				
+				bool have = 0;
+				for( int i=0; i<13; ++i) //自己有桌上的花色。。出牌。。
+				{
+					if( hand[i] != 0 && card[hand[i]].Clr() == dom_clr )
+					{	
+						out = i;
+						have = 1;
+					}
+				}
+				
+				if (have == 0) // 自己没有桌上的花色。。瞎选。。
+				{
+					int weight = 15;
+					for( int j=0; j<13; ++j)
+					{
+						if( hand[j]!=0 && card[ hand[j] ].Wgt() < weight )
+						out = j, weight = card[ hand[j] ].Wgt();
+					}
+				}
+			}
 		}
 		
-		int out = 13 - inhand; 
 
 		on_table[ Id() ] = hand[out];// give a card from hand onto the table..
 		hand[out] = 0; // this position is empty now.. set to 0..
