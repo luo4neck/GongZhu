@@ -38,6 +38,7 @@ class CARD
 		else if ( ID == 24 )	credit = -20; // heart J..
 		else if ( ID == 25 )	credit = -30; // heart Q..
 		else if ( ID == 26 )	credit = -40; // heart k..
+		else if ( ID == 36 )	credit = 2;   // transformer..
 		else if ( ID == 50 )	credit = 100; // sheep.. 
 		else					credit = 0; 
 	}
@@ -61,7 +62,8 @@ class CARD
 		wcout<<" ";
 		//wcout<<"-"<<Id()<<" ";
 	}
-
+	
+	void Double()	{ credit = credit * 2; }
 	const int Id()  { return id; }
 	
 	const int Wgt() { return weight; }
@@ -97,9 +99,6 @@ int *Shuffle()
 class PLAYER
 {
 	private:
-	bool sheep; //羊。。
-	bool pig; //猪。。
-	bool bian; //变压器。。
 	int score;
 	int score_sum;
 	const int id;
@@ -108,9 +107,6 @@ class PLAYER
 
 	PLAYER(int I): id(I)
 	{
-		sheep = 0;
-		pig = 0;
-		bian = 0;
 		score = 0;
 		score_sum = 0;
 	}

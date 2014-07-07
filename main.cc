@@ -10,6 +10,7 @@ void print_table(int on_table[], CARD *card);
 int Play(int first, PLAYER &P0, PLAYER &P1, PLAYER &P2, PLAYER &P3, CARD *card);
 int four_max(int first, int on_table[], CARD* card);
 int Allmark(int on_table[], CARD* card);
+void Sellall(bool pig, bool sheep, bool heart, bool trans, PLAYER P0, CARD *card);
 
 int main()
 {
@@ -56,6 +57,11 @@ int main()
 		for(int i=0; i<13; ++i) card[P3.hand[i]].Prt(); wcout<<endl;
 		*/
 		// play..
+		
+		//sell or not, 0 is not sold, 1 is sold..
+		bool pig=0, sheep=0, heart=0, trans=0;
+		Sellall(pig, sheep, heart, trans, P0, card);
+
 		for(int round_i=0; round_i<13; ++round_i)
 		{
 			wcout<<endl<<"+ + + + + + + + + + + + + + + + ";

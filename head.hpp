@@ -181,3 +181,111 @@ int Play(int first, PLAYER &P0, PLAYER &P1, PLAYER &P2, PLAYER &P3, CARD *card)
 	wcout<< next <<endl;	
 	return next;
 }
+
+void Sellall(bool pig, bool sheep, bool heart, bool trans, PLAYER P0, CARD *card)
+{
+	srand48(time(NULL));
+	bool havepig = 0; // 0 is do not have pig..
+	for(int i=0; i<13; ++i)
+	{
+		if ( P0.hand[i] == 12 )
+		{
+			wcout<<"Pig in your hand, do you want to sell Pig? (y/n)"<<endl;
+			while(1)
+			{
+				wchar_t check;
+				wcin>>check;
+				if( check != 'y' && check != 'n' )
+				{
+					wcout<<"Please input 'y' or 'n'!"<<endl;
+				}
+				else
+				{
+					card[12].Double();
+					pig = 1;
+					havepig = 1;
+					break;
+				}
+			}
+		}
+	}
+	if( havepig ==0 && drand48()> 0.6 ) pig = 1; 
+
+	bool haveheart = 0; // 0 is do not have heart..
+	for(int i=0; i<13; ++i)
+	{
+		if ( P0.hand[i] == 14 )
+		{
+			wcout<<"Pig in your hand, do you want to sell Heart? (y/n)"<<endl;
+			while(1)
+			{
+				wchar_t check;
+				wcin>>check;
+				if( check != 'y' && check != 'n' )
+				{
+					wcout<<"Please input 'y' or 'n'!"<<endl;
+				}
+				else
+				{
+					card[14].Double();
+					heart = 1;
+					haveheart = 1;
+					break;
+				}
+			}
+		}
+	}
+	if( haveheart ==0 && drand48()> 0.6 ) heart = 1; 
+	
+	bool havesheep = 0; // 0 is do not have sheep..
+	for(int i=0; i<13; ++i)
+	{
+		if ( P0.hand[i] == 50 )
+		{
+			wcout<<"Pig in your hand, do you want to sell Sheep? (y/n)"<<endl;
+			while(1)
+			{
+				wchar_t check;
+				wcin>>check;
+				if( check != 'y' && check != 'n' )
+				{
+					wcout<<"Please input 'y' or 'n'!"<<endl;
+				}
+				else
+				{
+					card[50].Double();
+					sheep = 1;
+					havesheep = 1;
+					break;
+				}
+			}
+		}
+	}
+	if( havesheep ==0 && drand48()> 0.6 ) sheep = 1; 
+
+	bool havetrans = 0; // 0 is do not have trans..
+	for(int i=0; i<13; ++i)
+	{
+		if ( P0.hand[i] == 36 )
+		{
+			wcout<<"Pig in your hand, do you want to sell Transformer? (y/n)"<<endl;
+			while(1)
+			{
+				wchar_t check;
+				wcin>>check;
+				if( check != 'y' && check != 'n' )
+				{
+					wcout<<"Please input 'y' or 'n'!"<<endl;
+				}
+				else
+				{
+					card[36].Double();
+					trans = 1;
+					havetrans = 1;
+					break;
+				}
+			}
+		}
+	}
+	if( havetrans ==0 && drand48()> 0.6 ) trans = 1; 
+}
