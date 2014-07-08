@@ -4,11 +4,11 @@
 using namespace std;
 
 const wchar_t spade[]  = L"\u2660";
-const wchar_t heart[]  = L"\u2665";
-//const wchar_t heart[]  = L"\u2661";
+//const wchar_t heart[]  = L"\u2665";
+const wchar_t heart[]  = L"\u2661";
 const wchar_t club[]   = L"\u2663";
-const wchar_t diamond[]= L"\u2666";
-//const wchar_t diamond[]= L"\u2662";
+//const wchar_t diamond[]= L"\u2666";
+const wchar_t diamond[]= L"\u2662";
 
 class CARD
 {
